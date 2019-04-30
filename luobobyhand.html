@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .wrap {
+            margin: 0 auto;
+            width: 1000px;
+        }
+
+        #black {
+            height: 100vh;
+            background: #000;
+            opacity: 0.5;
+            /* 图片透明度会影响上下覆盖的透明度，想要不被影响的元素需要把position设置absolute*/
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        #big {
+            position: absolute;
+            top: 200px;
+            width: 900px;
+            height: 400px;
+            justify-content: space-between;
+            align-items: center;
+            display: none;
+        }
+
+        #big img {
+            margin: 0 30px;
+        }
+
+        #bigpic {
+            flex: 1;
+            height: 100%;
+        }
+
+        #black {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <img src="img/s1.jpg">
+        <img src="img/s2.jpg">
+        <img src="img/s3.jpg">
+        <img src="img/s4.jpg">
+        <img src="img/s5.jpg">
+        <img src="img/s6.jpg">
+        <img src="img/s7.jpg">
+        <img src="img/s8.jpg">
+        <img src="img/s9.jpg">
+    </div>
+    <div id="black"></div>
+    <div class="wrap">
+        <div id="big">
+            <img src="img/dirl.png" id="left">
+            <img src="img/s1.jpg" id="bigpic">
+            <img src="img/dirr.png" id="right">
+        </div>
+    </div>
+
+    <script>
+        var wrap = document.getElementsByClassName('wrap')[0];
+        var pics = wrap.getElementsByTagName('img');
+        var big = document.getElementById('big');
+        var bigpic = document.getElementById('bigpic');
+        var black = document.getElementById('black');
+        var left = document.getElementById('left');
+        var right = document.getElementById('right');
+        for (var i = 0; i < pics.length; i++) {
+            pics[i].index = i; //这句话习惯性要加上，否则很难检测i或者index的具体数值，总会显示undifined;
+            pics[i].onclick = function () {
+                var cur = this.index; //引入cur变量；
+                big.style.display = 'flex';
+                black.style.display = 'block';
+                bigpic.src = this.src;
+                left.onclick = function () {
+                    cur--; //
+                    if (cur < 0) cur = pics.length - 1;
+                    bigpic.src = pics[cur].src;
+                }
+                right.onclick = function () {
+                    cur++; //
+                    if (cur > 8) cur = 0;
+                    bigpic.src = pics[cur].src;
+                }
+            }
+            black.onclick = function () {
+                this.style.display = 'none';
+                big.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
